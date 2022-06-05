@@ -5,14 +5,17 @@ from .locators import MainPageLocators
 from .login_page import LoginPage
 
 class MainPage(BasePage):
-    def go_to_login_page(self):
-        link = self.browser.find_element(By.CSS_SELECTOR, "#login_link")
-        link.click()
-        alert = self.browser.switch_to.alert
-        alert.accept()
+    def __init__(self, *args, **kwargs):
+        super(MainPage, self).__init__(*args, **kwargs)
 
-    def should_be_login_link(self):
-        assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
+    def go_to_backet(self):
+        link = self.browser.find_element(*MainPageLocators.BASCKET_LINK)
+        link.click()
+
+    def check_if_bascket_is_empty(self):
+        items = self.browser.find_element(*MainPageLocators.ITEMS_IN_BASCKET_LINK).text
+        print(items)
+        assert items == "Ваша корзина пуста Продолжить покупки"
 
 
 
